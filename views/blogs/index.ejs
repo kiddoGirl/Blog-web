@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head.ejs') %>
+
+<body>
+   
+  <%- include('../partials/nav.ejs') %>
+
+
+
+   <div class="center-content"> 
+
+        <div>
+            <p class="create-blog">
+                Unleash your creativity on our innovative blog.Explore your innovation skills and dive into
+                a world of limitless possibilities.
+            </p>
+        </div>
+
+
+        <div>
+            <a class="create-btn" href="blogs/createblog">Create a New Blog</a>
+        </div>
+
+   </div>
+
+
+   <div>
+        <p class="animate">
+            Unlock your imagination and let creativity soar,where dreams take shape and inspiration galore.
+        </p>
+   </div>
+
+
+
+   <div>
+        <p id="all-blogs" class="allblogs">All Blogs</p>
+   </div>
+
+
+    <div class="three-container">
+        <% if (blogs.length > 0) { %>
+        <div class="row">
+            <% blogs.forEach((blog, index) => { %>
+
+            <div class="boxes" data-doc="<%= blog._id %>">
+
+                <div>
+                    <img class="three-img" src="data:blog/<%=blog.img.contentType%>;base64,
+                    <%=blog.img.data.toString('base64')%>" alt="blog-img">
+                </div>
+
+                <div class="ts">
+                    <p class="title"><%= blog.title %></p>
+                    <p class="content"><%= blog.snippet %></p>
+                </div>
+
+                <a class="delete" href="/blogs/<%= blog._id %>">View Blog</a>
+
+            </div>
+            
+            <% if ((index + 1) % 3 === 0) { %>
+                </div><div class="row">
+            <% } %>
+            <% }) %>
+        </div>
+        <% } else { %>
+        <p>There are no blogs to display...</p>
+        <% } %>
+    </div>
+  
+
+
+</body>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded' , function(){
+            const anchorLinks = document.querySelectorAll('nav a[href^="#"]');
+            for(let link of anchorLinks){
+                link.addEventListener('click',function(e){
+                    e.preventDefault();
+                    const target =document.querySelector(this.getAttribute('href'));
+                    const offsetTop = target.offsetTop;
+
+                    window.scrollTo({
+                        top:offsetTop,
+                        behavior:'smooth',
+                        duration:100,
+                    });
+                });
+            }
+        });
+    </script>
+
+
+</html>
+
